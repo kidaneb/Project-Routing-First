@@ -27,7 +27,7 @@ function Todos() {
 }
 
 function loader({ request: { signal } }) {
-  return getTodos({signal})
+  return getTodos({ signal });
 }
 
 export const TodosRoute = {

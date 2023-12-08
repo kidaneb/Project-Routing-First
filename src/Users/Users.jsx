@@ -6,6 +6,7 @@ function Users() {
   const users = useLoaderData();
 
   return (
+    
     <>
       <div className="container">
         <h1 className="page-title">Users</h1>
