@@ -1,8 +1,10 @@
 import { Link, useLoaderData, useNavigation, useParams } from "react-router-dom";
-import { getUser } from "./api/USERS";
+import { getUser } from "./api/users";
 import axios from "axios";
 import { getPosts, getUserPost } from "./api/posts";
-import { getTodos } from "./api/todos";
+import { getUserTodos } from "./api/todos";
+import { PostCard } from "./Components/PostCard";
+import { TodoItems } from "./Components/TodoItems";
 
 function User() {
   const { user, posts, todos } = useLoaderData();
@@ -27,21 +29,7 @@ function User() {
         <div className="card-grid">
           {posts.map((post) => {
             return (
-              <div key={post.id} className="card">
-                <div className="card-header">
-                  {post.title}
-                </div>
-                <div className="card-body">
-                  <div className="card-preview-text">
-                    {post.body}
-                  </div>
-                </div>
-                <div className="card-footer">
-                  <Link className="btn" to="/posts">
-                    View
-                  </Link>
-                </div>
-              </div>
+              <PostCard key={post.id} {...post}/>
             );
           })}
         </div>
@@ -52,7 +40,7 @@ function User() {
          
          {todos.map((todo) => {
           return(
-            <li key={todo.id} className= { todo.completed ? "strike-through" : "" }>{todo.title}</li>
+            <TodoItems key={todo.id} {...todo} />
           )
          })}       
         </ul>
@@ -64,7 +52,7 @@ function User() {
 export async function loader({ request: { signal }, params: { userId } }) {
   const user = getUser(userId, { signal });
   const posts = getUserPost(userId, { signal });
-  const todos = getTodos(userId, {signal})
+  const todos = getUserTodos(userId, {signal})
   return { user: await user, posts: await posts, todos: await todos };
 }
 
