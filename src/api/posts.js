@@ -7,3 +7,7 @@ export function getPosts(options) {
 export function getPost(postId, options) {
   return baseApi.get(`posts/${postId}`,options).then((res) => res.data);
 }
+
+export function getUserPost(userId,options){
+  return baseApi.get(`/users/${userId}/posts`, options).then(res=>res.data);
+}

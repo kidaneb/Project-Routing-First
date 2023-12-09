@@ -12,7 +12,7 @@ import { RootLayout } from "./RootLayout";
 import { PostsRoute } from "./Posts/Posts";
 import { TodosRoute } from "./Todos/Todos";
 import { UsersRoute } from "./Users/Users";
-import { PostRoute } from "./post";
+import { PostRoute } from "./Post";
 import { UserRoute } from "./User";
 
 export const router = createBrowserRouter([

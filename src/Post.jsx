@@ -1,64 +1,47 @@
 import axios from "axios";
 
-import { getPost } from "./api/posts";
+import { getPost, getPosts } from "./api/posts";
 import { Link, useLoaderData, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getUser, getUsers } from "./api/users";
+import { getComments } from "./api/comment";
 
 function Post() {
-  const post = useLoaderData();
-  const [comments, setCommnets] = useState([]);
-  const [users, setUsers] = useState([]);
-  const {userId} = useParams();
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:3000/comments")
-      .then((res) => res.json())
-      .then((data) => setCommnets(data));
-    fetch("http://127.0.0.1:3000/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
-  }, []);
-
+  const { post, user, comments } = useLoaderData();
   return (
     <>
       <div className="container">
         <h1 className="page-title">{post.title}</h1>
-        {users.map((user) => {
-          if (user.id === post.userId) {
-            return (
-              <span key={user.id} className="page-subtitle">
-                By: <Link to={`/users/${user.id}`}>{user.name}</Link>
-              </span>
-            );
-          } else {
-            return null;
-          }
-        })}
+
+        <span key={user.id} className="page-subtitle">
+          By: <Link to={`/users/${user.id}`}>{user.name}</Link>
+        </span>
+
         <div>{post.body}</div>
         <h3 className="mt-4 mb-2">Comments</h3>
 
         <div className="card-stack">
           {comments.map((comment) => {
-            if (comment.postId === post.id) {
-              return (
-                <div key={comment.id} className="card">
-                  <div className="card-body">
-                    <div className="text-sm mb-1">{comment.email}</div>
-                    {comment.body}
-                  </div>
+            return (
+              <div key={comment.id} className="card">
+                <div className="card-body">
+                  <div className="text-sm mb-1">{comment.email}</div>
+                  {comment.body}
                 </div>
-              );
-            } else {
-              return null;
-            }
+              </div>
+            );
           })}
         </div>
       </div>
     </>
   );
 }
-function loader({ request: { signal }, params }) {
-  return getPost(params.postId, { signal });
+async function loader({ request: { signal }, params: { postId } }) {
+  const comments = getComments(postId, { signal });
+  const post = await getPost(postId, { signal });
+  const user = getUser(post.userId, { signal });
+
+  return { post, user: await user, comments: await comments };
 }
 
 export const PostRoute = {
