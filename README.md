@@ -5,7 +5,8 @@ Features:
   * Routing: Navigates between different pages using React Router library.
   * Multiple Pages: Displays data on different pages based on user navigation.
   * Basic React Concepts: Utilizes fundamental React concepts like components, props, and state.
-Overall:
+
+Overall Benefits:
   * Demonstrates core functionalities of React and routing.
   * Provides a basic template for building more complex React applications.
   * Offers hands-on experience with API interaction and data rendering.
