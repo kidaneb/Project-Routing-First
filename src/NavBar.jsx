@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export function NavBar() {
   return (
     <nav className="top-nav">
-      <div className="nav-text-large">My App</div>
+      <Link className="nav-text-large" to="/posts">My App</Link>
       <ul className="nav-list">
         <li>
           <Link to="/posts">Posts</Link>
