@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Link, useLoaderData } from "react-router-dom";
-import { getUsers } from "../api/USERS";
+import { getUsers } from "../api/users";
 
 function Users() {
   const users = useLoaderData();

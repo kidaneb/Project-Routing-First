@@ -50,10 +50,10 @@ function User() {
 }
 
 export async function loader({ request: { signal }, params: { userId } }) {
+  const posts = getUserPost(userId,{signal});
+  const todos = getUserTodos(userId,{signal})
   const user = getUser(userId, { signal });
-  const posts = getUserPost(userId, { signal });
-  const todos = getUserTodos(userId, {signal})
-  return { user: await user, posts: await posts, todos: await todos };
+  return {posts: await posts, todos: await todos, user: await user };
 }
 
 export const UserRoute = {
